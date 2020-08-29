@@ -1,3 +1,7 @@
+---
+layout: default
+title: トップページ２
+---
 # Python関係の忘備録
 ## 環境系
 ### Anaconda
