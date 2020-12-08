@@ -47,7 +47,9 @@ title: メモページ
    - 可視状態はView Layerごとに管理している。
 3. レンダリング後、Compositing画面で、Render Layerノードを複製し、下部のView Layerを所望のレイヤーに変更する。
 4. `Color`→`Z combine`ノードを追加し、分離したViewのImageとZ値を繋ぐと合成してくれる。
-
+- 背景を削除する際、`Film`->`Transparent`で消すと全部のViewから消えて不便。個別に設定できない。
+   - 一度背景ありでレンダリングしてしまってから、Z値でしきい値を取って削除する。
+   - 特に何も考えなくても、`Z combine`に入れる時に最も優先度が低くなる(Z->\inf)ので勝手に消えてくれる。
 ### VScode
 #### 実行時にfailed to launch (exit code: 1)となる
 - 既にほかの用途でVScodeを使っている場合、WSLで実行していないか確認する。
