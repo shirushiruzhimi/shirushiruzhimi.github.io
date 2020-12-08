@@ -37,6 +37,16 @@ title: メモページ
 2. 布と相互作用するオブジェクトを用意する。<br>
  a. `Physics`→`Collision`をクリックして衝突判定を有効化する。<br>
  
+#### 毎回忘れるオブジェクト毎のレンダリングと合成
+- Compositingのレンダーレイヤーはビュー単位でインプットを取り扱う
+- ビューは右上から選択する。デフォルトでView Layer
+1. View Layerを複製する。
+   - 分けたい数だけ複製する。
+   - 現在の状態から分けたいなら、Copy Settingを選択すると表示するレイヤーの状態がコピーされて楽。
+2. 編集したいView Layerを選択した状態で、Outliner(オブジェクトの一覧)から表示したいオブジェクトだけにチェックを入れる。
+   - 可視状態はView Layerごとに管理している。
+3. レンダリング後、Compositing画面で、Render Layerノードを複製し、下部のView Layerを所望のレイヤーに変更する。
+4. `Color`→`Z combine`ノードを追加し、分離したViewのImageとZ値を繋ぐと合成してくれる。
 
 ### VScode
 #### 実行時にfailed to launch (exit code: 1)となる
