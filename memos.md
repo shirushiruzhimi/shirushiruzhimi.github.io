@@ -50,6 +50,17 @@ title: メモページ
 - 背景を削除する際、`Film`->`Transparent`で消すと全部のViewから消えて不便。個別に設定できない。
    - 一度背景ありでレンダリングしてしまってから、Z値でしきい値を取って削除する。
    - 特に何も考えなくても、`Z combine`に入れる時に最も優先度が低くなる(Z->\inf)ので勝手に消えてくれる。
+   
+#### 影だけレンダリングしたい場合の設定
+##### Eeveeの場合
+- マテリアルで設定する。Alpha設定を影に反映されないようにし、Alpha=0とすればよい。
+1. `Material` -> `Settings` -> `Blend Mode`を`Alpha Clip`
+2. `Material` -> `Settings` -> `Shadow Mode`を`Opaque`
+3. `Material` -> `Surface` -> `Alpha`を`0`にする
+##### Cyclesの場合
+- オブジェクトの設定でレイトレ時に無視するようにする。
+1. `Object Properties` -> `Visibility` -> `Ray Visibility` -> `Camera`のチェックを外す
+
 ### VScode
 #### 実行時にfailed to launch (exit code: 1)となる
 - 既にほかの用途でVScodeを使っている場合、WSLで実行していないか確認する。
