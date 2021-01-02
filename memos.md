@@ -2,6 +2,9 @@
 layout: default
 title: メモページ
 ---
+
+# 量が溜まってきたら整理すること　＞　未来の自分
+
 # Python関係の忘備録
 ## 環境系
 ### Python
