@@ -61,6 +61,17 @@ title: メモページ
 - オブジェクトの設定でレイトレ時に無視するようにする。
 1. `Object Properties` -> `Visibility` -> `Ray Visibility` -> `Camera`のチェックを外す
 
+#### BVHについて
+##### 概要
+- モーキャプのアニメーションとArmatureのセット
+
+##### 使い方
+- File -> Import -> .bvh　だけでOK
+- ImportされたArmatureにアニメーションがついてるので、今持ってるモデルにそのまま使える訳じゃない。
+##### トレースする場合に逆回転する
+- オイラー角じゃなくてクォータニオンを使う
+[参考 dskjal様](https://dskjal.com/blender/eular-vs-quaternion-on-blender.html)
+
 ### VScode
 #### 実行時にfailed to launch (exit code: 1)となる
 - 既にほかの用途でVScodeを使っている場合、WSLで実行していないか確認する。
