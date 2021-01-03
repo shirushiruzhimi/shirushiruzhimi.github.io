@@ -16,6 +16,8 @@
    - [公式ドキュメント](https://docs.blender.org/api/current/bpy.props.html#propertygroup-example)  
    
 ### 入力UIの配置  
+- とりあえず作ったコードを基に説明  
+[Basic_panel.py](./samples/Baic_panel.py)
 
 ```python
 import bpy
