@@ -77,6 +77,7 @@ title: メモページ
 
 ## Blender APIのGUI周りについて
 ### 変数の宣言
+- [公式ドキュメント](https://docs.blender.org/api/current/bpy.props.html)
 - 下記のようにSceneのメンバ変数を外から定義する。  
 `bpy.types.Scene.test_variable= bpy.props.StringProperty(default = "skelton")`  
 `bpy.types.Scene.test_variable= bpy.props.IntProperty(default = 1919)`  
@@ -86,9 +87,19 @@ title: メモページ
    ```python
    bpy.types.Scene.test_variable= bpy.props.EnumProperty(items=[("A","displayA","descriptionA"),
       ("B","displayB","descriptionB")], default="A")`
-   ```
+   ```  
+- まとめて定義する場合は、Property Groupを使う。(例は以下のコード)  
+   - (公式ドキュメント)[https://docs.blender.org/api/current/bpy.props.html#propertygroup-example]  
 ### 入力UIの配置
 ```python
+# Define parameters
+class PROPERTY_SETTINGS(bpy.types.PropertyGroup):
+    Target1_index :   bpy.props.IntProperty()
+    Target1_scale :   bpy.props.FloatProperty()
+    Target1_name :    bpy.props.StringProperty()
+    Target1_types :   bpy.props.EnumProperty(items=[("A","displayA","descriptionA"),
+      ("B","displayB","descriptionB")], default="A")
+      
 # Define and draw GUI panel
 class UI_PANEL_TEST(bpy.types.Panel):
     # Name of panel
@@ -104,13 +115,23 @@ class UI_PANEL_TEST(bpy.types.Panel):
     def draw(self, context):
         scene = context.scene
         layout = self.layout
-```
-1. `bpy.types.Panel`を継承したクラスを作る。
-2. 名前と配置情報を`bl_***`に代入する。
-3. `context`を引数に持つdrawメソッドを定義(オーバーライド?)する。
-   - `context`にBlenderのcontextが入れられるので、`context.scene`などでsceneの情報を取得できる
-4. `self.layout`の各種メソッドを呼ぶとUIが追記されていく。
+        my_props = bpy.data.scenes[0]
 
+        box = layout.box()        
+        row = box.row()              
+        row.prop(my_props.PROPERTY_SETTINGS, "Target1_index")
+        row.prop(my_props.PROPERTY_SETTINGS, "Target1_scale") 
+        row = box.row()               
+        col = row.column()
+        col.prop(my_props.PROPERTY_SETTINGS, "Target1_types")
+        col.prop_search(my_props.PROPERTY_SETTINGS, "Target1_name", scene, "objects")
+```
+1. Propert Groupで使う変数を定義しておく。
+2. `bpy.types.Panel`を継承したクラスを作る。
+3. 名前と配置情報を`bl_***`に代入する。
+4. `context`を引数に持つdrawメソッドを定義(オーバーライド?)する。
+   - `context`にBlenderのcontextが入れられるので、`context.scene`などでsceneの情報を取得できる
+5. `self.layout`の各種メソッドを呼ぶとUIが追記されていく。
    - 描画領域中に行を追加（改行）したい場合  
       `row = self.layout.row()`
    - 描画領域中に列を追加（改行）したい場合  
@@ -123,12 +144,17 @@ class UI_PANEL_TEST(bpy.types.Panel):
       row = box.row()
       col = row.column()
       ```
-   - 戻り値(ポインタ)を捨てちゃうと後で追加できないので、複雑な場合は変数を分けておく。  
+   - 戻り値(ポインタ)を捨てちゃうと後で追加できないので、複雑な場合は変数を分けておくといいかも。  
       ```python
       box1 = self.layout.box()   
       box2 = self.layout.box()   
       ```
-5. クラスを登録する。
+6. 入力UIを設置する。
+   - 以下のように、上記レイアウトからクラスとそのメンバ（String)を引数とした`prop()`を呼び出すと配置される。
+   `col.prop(my_props.PROPERTY_SETTINGS, "Target1_types")`
+   - シーン中に存在するオブジェクトから選択させたい場合、`prop_search()`を呼び出す。第3, 4引数は検索条件。
+   `col.prop_search(my_props.PROPERTY_SETTINGS, "Target1_name", scene, "objects")
+7. クラスを登録する。
 ```python
 UTIL_CLASSES = (
     UI_PANEL_TEST,
@@ -137,16 +163,20 @@ def register():
     from bpy.utils import register_class
     for cls_v in UTIL_CLASSES:
         register_class(cls_v)
+    register_class(PROPERTY_SETTINGS)
+    bpy.types.Scene.PROPERTY_SETTINGS = bpy.props.PointerProperty(type=PROPERTY_SETTINGS)
 
 def unregister():
     from bpy.utils import unregister_class
     for cls_v in UTIL_CLASSES:
         unregister_class(cls_v)
-        
+    del bpy.types.Scene.PROPERTY_SETTINGS
+    unregister_class(PROPERTY_SETTINGS)             
 if __name__ == "__main__":
     register()
 ```
-- 別にクラスを定義する際は、そのクラスもregister_class()しなければいけないのでUTIL_CLASSESにまとめている。
+- 別にクラスを定義する際は、そのクラスもregister_class()しなければいけないのでUTIL_CLASSESにまとめている
+- Property Groupも登録しないと使えないので注意。
 
 ### VScode
 #### 実行時にfailed to launch (exit code: 1)となる
