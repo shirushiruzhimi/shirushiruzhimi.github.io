@@ -1,6 +1,6 @@
-# Blender APIに関するメモ
-## Blender APIのGUI周りについて
-### 変数の宣言
+# Blender APIに関するメモ  
+## Blender APIのGUI周りについて  
+### 変数の宣言  
 - [公式ドキュメント](https://docs.blender.org/api/current/bpy.props.html)
 - 下記のようにSceneのメンバ変数を外から定義する。  
 `bpy.types.Scene.test_variable= bpy.props.StringProperty(default = "skelton")`  
@@ -14,7 +14,7 @@
    ```  
 - まとめて定義する場合は、Property Groupを使う。(例は以下のコード)  
    - (公式ドキュメント)[https://docs.blender.org/api/current/bpy.props.html#propertygroup-example]  
-### 入力UIの配置
+### 入力UIの配置  
 ```python
 # Define parameters
 class PROPERTY_SETTINGS(bpy.types.PropertyGroup):
@@ -50,13 +50,13 @@ class UI_PT_PANEL_TEST(bpy.types.Panel):
         col.prop(my_props.PROPERTY_SETTINGS, "Target1_types")
         col.prop_search(my_props.PROPERTY_SETTINGS, "Target1_name", scene, "objects")
 ```
-1. Propert Groupで使う変数を定義しておく。
-   - 名前に_PT_と入れるのを推奨されている。（入れないとwarningが出る）
-2. `bpy.types.Panel`を継承したクラスを作る。
-3. 名前と配置情報を`bl_***`に代入する。
-4. `context`を引数に持つdrawメソッドを定義(オーバーライド?)する。
-   - `context`にBlenderのcontextが入れられるので、`context.scene`などでsceneの情報を取得できる
-5. `self.layout`の各種メソッドを呼ぶとUIが追記されていく。
+1. Propert Groupで使う変数を定義しておく。  
+   - 名前に_PT_と入れるのを推奨されている。（入れないとwarningが出る）  
+2. `bpy.types.Panel`を継承したクラスを作る。  
+3. 名前と配置情報を`bl_***`に代入する。  
+4. `context`を引数に持つdrawメソッドを定義(オーバーライド?)する。  
+   - `context`にBlenderのcontextが入れられるので、`context.scene`などでsceneの情報を取得できる  
+5. `self.layout`の各種メソッドを呼ぶとUIが追記されていく。  
    - 描画領域中に行を追加（改行）したい場合  
       `row = self.layout.row()`
    - 描画領域中に列を追加（改行）したい場合  
@@ -73,7 +73,7 @@ class UI_PT_PANEL_TEST(bpy.types.Panel):
       ```python
       box1 = self.layout.box()   
       box2 = self.layout.box()   
-      ```
+      ```  
 6. 入力UIを設置する。
    - 以下のように、上記レイアウトからクラスとそのメンバ（String)を引数とした`prop()`を呼び出すと配置される。
    `col.prop(my_props.PROPERTY_SETTINGS, "Target1_types")`
