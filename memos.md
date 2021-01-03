@@ -154,7 +154,7 @@ class UI_PT_PANEL_TEST(bpy.types.Panel):
    - 以下のように、上記レイアウトからクラスとそのメンバ（String)を引数とした`prop()`を呼び出すと配置される。
    `col.prop(my_props.PROPERTY_SETTINGS, "Target1_types")`
    - シーン中に存在するオブジェクトから選択させたい場合、`prop_search()`を呼び出す。第3, 4引数は検索条件。
-   `col.prop_search(my_props.PROPERTY_SETTINGS, "Target1_name", scene, "objects")
+   `col.prop_search(my_props.PROPERTY_SETTINGS, "Target1_name", scene, "objects")`
 7. クラスを登録する。
 ```python
 UTIL_CLASSES = (
