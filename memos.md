@@ -75,16 +75,16 @@ title: メモページ
 - オイラー角じゃなくてクォータニオンを使う
 [参考 dskjal様](https://dskjal.com/blender/eular-vs-quaternion-on-blender.html)
 
-#### Blender APIのGUI周りについて
-##### 変数の宣言
-- 下記のようにSceneのメンバ変数を外から定義する。
-`bpy.types.Scene.test_variable= bpy.props.StringProperty(default = "skelton")`
-`bpy.types.Scene.test_variable= bpy.props.IntProperty(default = 1919)`
-`bpy.types.Scene.test_variable= bpy.props.FloatProperty(default = 191.9)`
-`bpy.types.Scene.test_variable= bpy.props.BoolProperty(default = True)`
-- プルダウンにしたい場合はitemsを入力する。
-`bpy.types.Scene.test_variable= bpy.props.StringProperty(items = ["skelton","A","B","C"], default = "skelton")`
-##### 入力UIの配置
+## Blender APIのGUI周りについて
+### 変数の宣言
+- 下記のようにSceneのメンバ変数を外から定義する。  
+`bpy.types.Scene.test_variable= bpy.props.StringProperty(default = "skelton")`  
+`bpy.types.Scene.test_variable= bpy.props.IntProperty(default = 1919)`  
+`bpy.types.Scene.test_variable= bpy.props.FloatProperty(default = 191.9)`  
+`bpy.types.Scene.test_variable= bpy.props.BoolProperty(default = True)`  
+- プルダウンにしたい場合はitemsを入力する。  
+`bpy.types.Scene.test_variable= bpy.props.StringProperty(items = ["skelton","A","B","C"], default = "skelton")`  
+### 入力UIの配置
 ```python
 # Define and draw GUI panel
 class UI_PANEL_TEST(bpy.types.Panel):
