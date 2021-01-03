@@ -86,7 +86,7 @@ title: メモページ
 - プルダウンにしたい場合はEnumPropertyを定義する。左から順に(識別子, UI表示文, オンカーソル時の説明文)のセットをリストにしてitemsに設定。
    ```python
    bpy.types.Scene.test_variable= bpy.props.EnumProperty(items=[("A","displayA","descriptionA"),
-      ("B","displayB","descriptionB")], default="A")`
+      ("B","displayB","descriptionB")], default="A")
    ```  
 - まとめて定義する場合は、Property Groupを使う。(例は以下のコード)  
    - (公式ドキュメント)[https://docs.blender.org/api/current/bpy.props.html#propertygroup-example]  
@@ -101,7 +101,7 @@ class PROPERTY_SETTINGS(bpy.types.PropertyGroup):
       ("B","displayB","descriptionB")], default="A")
       
 # Define and draw GUI panel
-class UI_PANEL_TEST(bpy.types.Panel):
+class UI_PT_PANEL_TEST(bpy.types.Panel):
     # Name of panel
     bl_label = "Panel UI test"
     # The window the panel will be placed.
@@ -127,6 +127,7 @@ class UI_PANEL_TEST(bpy.types.Panel):
         col.prop_search(my_props.PROPERTY_SETTINGS, "Target1_name", scene, "objects")
 ```
 1. Propert Groupで使う変数を定義しておく。
+   - 名前に_PT_と入れるのを推奨されている。（入れないとwarningが出る）
 2. `bpy.types.Panel`を継承したクラスを作る。
 3. 名前と配置情報を`bl_***`に代入する。
 4. `context`を引数に持つdrawメソッドを定義(オーバーライド?)する。
