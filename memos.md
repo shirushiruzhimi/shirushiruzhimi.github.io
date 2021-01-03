@@ -82,8 +82,11 @@ title: メモページ
 `bpy.types.Scene.test_variable= bpy.props.IntProperty(default = 1919)`  
 `bpy.types.Scene.test_variable= bpy.props.FloatProperty(default = 191.9)`  
 `bpy.types.Scene.test_variable= bpy.props.BoolProperty(default = True)`  
-- プルダウンにしたい場合はitemsを入力する。  
-`bpy.types.Scene.test_variable= bpy.props.StringProperty(items = ["skelton","A","B","C"], default = "skelton")`  
+- プルダウンにしたい場合はEnumPropertyを定義する。左から順に(識別子, UI表示文, オンカーソル時の説明文)のセットをリストにしてitemsに設定。
+   ```python
+   bpy.types.Scene.test_variable= bpy.props.EnumProperty(items=[("A","displayA","descriptionA"),
+      ("B","displayB","descriptionB")], default="A")`
+   ```
 ### 入力UIの配置
 ```python
 # Define and draw GUI panel
