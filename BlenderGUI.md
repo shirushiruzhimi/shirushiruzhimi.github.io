@@ -18,6 +18,8 @@
 ### 入力UIの配置  
 
 ```python
+import bpy
+
 # Define parameters
 class PROPERTY_SETTINGS(bpy.types.PropertyGroup):
     Target1_index :   bpy.props.IntProperty()
@@ -35,22 +37,21 @@ class UI_PT_PANEL_TEST(bpy.types.Panel):
     # The region the panel will be placed.
     bl_region_type = "UI"
 
-    def update_tree(self, context):
-        self.do_update = True  
-
     def draw(self, context):
         scene = context.scene
         layout = self.layout
         my_props = bpy.data.scenes[0]
 
         box = layout.box()        
-        row = box.row()              
-        row.prop(my_props.PROPERTY_SETTINGS, "Target1_index")
-        row.prop(my_props.PROPERTY_SETTINGS, "Target1_scale") 
-        row = box.row()               
-        col = row.column()
+        row1 = box.row()         
+        row1.prop(my_props.PROPERTY_SETTINGS, "Target1_index")
+        row1.prop(my_props.PROPERTY_SETTINGS, "Target1_scale") 
+        row2 = box.row()               
+        col = row2.column()
         col.prop(my_props.PROPERTY_SETTINGS, "Target1_types")
         col.prop_search(my_props.PROPERTY_SETTINGS, "Target1_name", scene, "objects")
+        if my_props.PROPERTY_SETTINGS.Target1_name != "":
+            print(bpy.data.objects[my_props.PROPERTY_SETTINGS.Target1_name].type)
 ```
 
 1. Propert Groupで使う変数を定義しておく。  
