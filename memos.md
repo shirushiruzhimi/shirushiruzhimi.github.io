@@ -24,7 +24,7 @@ title: メモページ
  - 実際にやって出来た。
 ### JSON
 #### 文字列を辞書にパースしたい
-- json.loadd()
+- json.load()
 ### OpenCV
 #### cap.set()が効かない
 - カメラidが合っているか確認する。(0だと思っていたら仮想デバイスに押されて1になってることがある）
@@ -74,6 +74,76 @@ title: メモページ
 ##### トレースする場合に逆回転する
 - オイラー角じゃなくてクォータニオンを使う
 [参考 dskjal様](https://dskjal.com/blender/eular-vs-quaternion-on-blender.html)
+
+#### Blender APIのGUI周りについて
+##### 変数の宣言
+- 下記のようにSceneのメンバ変数を外から定義する。
+`bpy.types.Scene.test_variable= bpy.props.StringProperty(default = "skelton")`
+`bpy.types.Scene.test_variable= bpy.props.IntProperty(default = 1919)`
+`bpy.types.Scene.test_variable= bpy.props.FloatProperty(default = 191.9)`
+`bpy.types.Scene.test_variable= bpy.props.BoolProperty(default = True)`
+- プルダウンにしたい場合はitemsを入力する。
+`bpy.types.Scene.test_variable= bpy.props.StringProperty(items = ["skelton","A","B","C"], default = "skelton")`
+##### 入力UIの配置
+```python
+# Define and draw GUI panel
+class UI_PANEL_TEST(bpy.types.Panel):
+    # Name of panel
+    bl_label = "Panel UI test"
+    # The window the panel will be placed.
+    bl_space_type = "VIEW_3D"
+    # The region the panel will be placed.
+    bl_region_type = "UI"
+
+    def update_tree(self, context):
+        self.do_update = True  
+
+    def draw(self, context):
+        scene = context.scene
+        layout = self.layout
+```
+1. `bpy.types.Panel`を継承したクラスを作る。
+2. 名前と配置情報を`bl_***`に代入する。
+3. `context`を引数に持つdrawメソッドを定義(オーバーライド?)する。
+   - `context`にBlenderのcontextが入れられるので、`context.scene`などでsceneの情報を取得できる
+4. `self.layout`の各種メソッドを呼ぶとUIが追記されていく。
+
+   - 描画領域中に行を追加（改行）したい場合  
+      `row = self.layout.row()`
+   - 描画領域中に列を追加（改行）したい場合  
+      `row = self.layout.column()`      
+   - 描画領域のセットを追加したい場合  
+      `box = self.layout.box()`
+   - 上記領域の中に入れ子にして領域を定義することで柔軟にレイアウトできる。  
+      ```python
+      box = self.layout.box()
+      row = box.row()
+      col = row.column()
+      ```
+   - 戻り値(ポインタ)を捨てちゃうと後で追加できないので、複雑な場合は変数を分けておく。  
+      ```python
+      box1 = self.layout.box()   
+      box2 = self.layout.box()   
+      ```
+5. クラスを登録する。
+```python
+UTIL_CLASSES = (
+    UI_PANEL_TEST,
+)
+def register():
+    from bpy.utils import register_class
+    for cls_v in UTIL_CLASSES:
+        register_class(cls_v)
+
+def unregister():
+    from bpy.utils import unregister_class
+    for cls_v in UTIL_CLASSES:
+        unregister_class(cls_v)
+        
+if __name__ == "__main__":
+    register()
+```
+- 別にクラスを定義する際は、そのクラスもregister_class()しなければいけないのでUTIL_CLASSESにまとめている。
 
 ### VScode
 #### 実行時にfailed to launch (exit code: 1)となる
