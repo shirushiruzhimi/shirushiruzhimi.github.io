@@ -13,7 +13,7 @@
       ("B","displayB","descriptionB")], default="A")
    ```  
 - まとめて定義する場合は、Property Groupを使う。(例は以下のコード)  
-   - (公式ドキュメント)[https://docs.blender.org/api/current/bpy.props.html#propertygroup-example]  
+   - [公式ドキュメント](https://docs.blender.org/api/current/bpy.props.html#propertygroup-example)
 ### 入力UIの配置  
 ```python
 # Define parameters
