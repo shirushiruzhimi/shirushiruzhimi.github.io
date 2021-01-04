@@ -114,3 +114,12 @@ if __name__ == "__main__":
 
 - 別にクラスを定義する際は、そのクラスもregister_class()しなければいけないのでUTIL_CLASSESにまとめている
 - Property Groupも登録しないと使えないので注意。
+
+
+### TIPS
+- プロパティについて  
+[Property Definitions](https://docs.blender.org/api/current/bpy.props.html)  
+- レイアウトのメソッドについて  
+[UILayout](https://docs.blender.org/api/current/bpy.types.UILayout.html)  
+  - 特にpropで指定するものについて  
+  [prop()](https://docs.blender.org/api/current/bpy.types.UILayout.html?highlight=icon#bpy.types.UILayout.prop)  
