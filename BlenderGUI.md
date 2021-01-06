@@ -124,4 +124,7 @@ if __name__ == "__main__":
   - 特にpropで指定するものについて  
   [prop()](https://docs.blender.org/api/current/bpy.types.UILayout.html?highlight=icon#bpy.types.UILayout.prop)  
 - Constraintsの種類やプロパティなど  
-[Constraint](https://docs.blender.org/api/current/bpy.types.Constraint.html#bpy.types.Constraint)
+[Constraint](https://docs.blender.org/api/current/bpy.types.Constraint.html#bpy.types.Constraint)  
+
+- ファイルの入出力  
+   - `bpy_extras.io_utils.ImportHelper`や`bpy_extras.io_utils.ExportHelper`を継承したクラスを使う
