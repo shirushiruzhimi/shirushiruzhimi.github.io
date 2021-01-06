@@ -123,3 +123,5 @@ if __name__ == "__main__":
 [UILayout](https://docs.blender.org/api/current/bpy.types.UILayout.html)  
   - 特にpropで指定するものについて  
   [prop()](https://docs.blender.org/api/current/bpy.types.UILayout.html?highlight=icon#bpy.types.UILayout.prop)  
+- Constraintsの種類やプロパティなど  
+[Constraint](https://docs.blender.org/api/current/bpy.types.Constraint.html#bpy.types.Constraint)
