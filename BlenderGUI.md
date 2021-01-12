@@ -128,3 +128,7 @@ if __name__ == "__main__":
 
 - ファイルの入出力  
    - `bpy_extras.io_utils.ImportHelper`や`bpy_extras.io_utils.ExportHelper`を継承したクラスを使う
+   [io_utils](https://docs.blender.org/api/current/bpy_extras.io_utils.html)  
+- MODE_SETについて   
+   - `bpy.ops.object.mode_set()`でEDITに入る場合、`bpy.context.view_layer.objects.active`にオブジェクトを指定する。  
+   - `obj.select_set()`ではないので注意！これで時間を浪費した…。  
